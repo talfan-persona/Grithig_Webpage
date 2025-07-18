@@ -1,5 +1,5 @@
 ---
-title: Local Wildlife
+title: Wildlife
 show_page: true
 ---
 

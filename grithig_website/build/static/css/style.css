@@ -41,17 +41,19 @@ header {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 2rem;
+    gap: 1rem;
+    flex-wrap: nowrap;  /* keep all items on one line for desktop */
 }
 
 .nav-link {
     color: white;
     text-decoration: none;
-    padding: 0.75rem 1.5rem;
+    padding: 0.5rem 1rem;  /* narrower pill padding to reduce overall width */
     border-radius: 25px;
     transition: all 0.3s ease;
     font-weight: 500;
     border: 2px solid transparent;
+    white-space: nowrap;   /* prevent text from breaking onto multiple lines */
 }
 
 .nav-link:hover,

@@ -1,5 +1,5 @@
 ---
-title: Local Sightseeing
+title: Sightseeing
 show_page: true
 ---
 
