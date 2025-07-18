@@ -75,7 +75,19 @@ function initializeMap() {
 
 function loadGPXTracks() {
     console.log('Loading GPX tracks...', window.tracksData);
-    const colors = ['#2c5530', '#4a7c59', '#6b8e23', '#8fbc8f', '#2e8b57'];
+    // Distinct colour palette (cycles if there are more routes than colours)
+    const colors = [
+        '#e6194b', // red
+        '#3cb44b', // green
+        '#4363d8', // blue
+        '#f58231', // orange
+        '#911eb4', // purple
+        '#46f0f0', // cyan
+        '#f032e6', // magenta
+        '#bcf60c', // lime
+        '#fabebe', // pink
+        '#008080'  // teal
+    ];
     let allBounds = [];
     
     if (!window.tracksData || window.tracksData.length === 0) {
@@ -163,6 +175,12 @@ function parseAndDisplayGPX(gpxText, trackData, color, index) {
             opacity: 0.8,
             smoothFactor: 1
         }).addTo(map);
+
+        // Apply colour to corresponding track card immediately
+        const initialCard = document.querySelector(`.track-card[data-track="${index}"]`);
+        if (initialCard) {
+            initialCard.style.borderLeftColor = color;
+        }
         
         // Create popup content
         const popupContent = createTrackPopup(trackData, index);
@@ -190,11 +208,11 @@ function parseAndDisplayGPX(gpxText, trackData, color, index) {
                 opacity: 0.8
             });
             
-            // Reset track card highlight
+            // Reset track card highlight but keep the route colour
             const trackCard = document.querySelector(`.track-card[data-track="${index}"]`);
             if (trackCard) {
                 trackCard.style.backgroundColor = '#f8f9fa';
-                trackCard.style.borderLeftColor = '#4a7c59';
+                trackCard.style.borderLeftColor = color;
                 trackCard.style.borderLeftWidth = '4px';
             }
         });

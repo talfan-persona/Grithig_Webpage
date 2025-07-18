@@ -146,6 +146,8 @@ class WebsiteBuilder:
 
                 distance_km = round(distance_m / 1000, 2)
                 elevation_gain = round(elevation_gain)
+                # If elevation gain is zero, leave the field blank so it is not displayed in the UI
+                elevation_gain_str = "" if elevation_gain == 0 else f"{elevation_gain}m"
 
                 # Prefer name from GPX metadata, then existing YAML, else filename
                 name = gpx.name or existing.get(filename, {}).get('name') or filename.replace('_', ' ').title()
@@ -156,7 +158,7 @@ class WebsiteBuilder:
                     'name': name,
                     'type': track_entry.get('type', 'hiking'),
                     'distance': f"{distance_km} km",
-                    'elevation_gain': f"{elevation_gain}m",
+                    'elevation_gain': elevation_gain_str,
                     'description': track_entry.get('description', '')
                 })
 

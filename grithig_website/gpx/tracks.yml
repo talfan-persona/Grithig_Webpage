@@ -3,7 +3,7 @@ tracks:
   name: Henrhyd Falls from Y Grithig
   type: hiking
   distance: 10.86 km
-  elevation_gain: 0m
+  elevation_gain: ''
   description: Beautiful waterfall hike through ancient woodland. This circular route
     takes you from Y Grithig through peaceful valleys to Wales' tallest waterfall.
     The path includes woodland trails, stream crossings, and stunning views. Allow
@@ -12,23 +12,23 @@ tracks:
   name: Y Grithig  to Craig Y nos Country Park Loop
   type: hiking
   distance: 3.92 km
-  elevation_gain: 0m
+  elevation_gain: ''
   description: ''
 - filename: y_grithig_panoramic_walk_via_pwllcoediog_farm..gpx
   name: Y Grithig Panoramic Walk Via Pwllcoediog Farm.
   type: hiking
   distance: 4.16 km
-  elevation_gain: 0m
+  elevation_gain: ''
   description: ''
 - filename: y_grithig_to_the_ancient_briton.gpx
   name: Y Grithig To The Ancient Briton
   type: hiking
   distance: 2.87 km
-  elevation_gain: 0m
+  elevation_gain: ''
   description: ''
 - filename: y_grithig_to_the_cribarth.gpx
   name: Y Grithig To The Cribarth (Sleeping Giant)
   type: hiking
   distance: 18.51 km
-  elevation_gain: 0m
+  elevation_gain: ''
   description: ''
