@@ -50,6 +50,19 @@ function initializeMap() {
     };
     
     L.control.layers(baseMaps).addTo(map);
+
+    // Add a house marker at Y Grithig (postcode SA9 1GD)
+    const houseIcon = L.divIcon({
+        className: 'house-marker',
+        html: '<div style="background-color:#4a7c59;color:white;border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:14px;">🏠</div>',
+        iconSize: [24, 24],
+        iconAnchor: [12, 12]
+    });
+
+    let houseMarker = L.marker([51.82277165237456, -3.673910267940179], { icon: houseIcon })
+        .addTo(map)
+        .bindPopup('Y Grithig Accommodation');
+    houseMarker.setZIndexOffset(1000);
     
     // Load and display GPX tracks
     if (window.tracksData) {
