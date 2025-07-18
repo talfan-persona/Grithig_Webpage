@@ -11,6 +11,7 @@ import markdown
 from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
 import xml.etree.ElementTree as ET
+import gpxpy
 from datetime import datetime
 
 class WebsiteBuilder:
@@ -105,6 +106,69 @@ class WebsiteBuilder:
         except Exception as e:
             print(f"Error parsing GPX file {gpx_file}: {e}")
             return {}
+
+    def update_track_metadata(self):
+        """Compute distance/ascents for each GPX and update tracks.yml before the rest of the build."""
+        try:
+            tracks_file = self.gpx_dir / 'tracks.yml'
+
+            # Load any existing YAML so we preserve descriptions or custom fields
+            existing = {}
+            if tracks_file.exists():
+                with open(tracks_file, 'r', encoding='utf-8') as f:
+                    data = yaml.safe_load(f) or {}
+                    for tr in data.get('tracks', []):
+                        existing[tr['filename']] = tr
+
+            updated_tracks = []
+
+            for gpx_path in self.gpx_dir.glob('*.gpx'):
+                filename = gpx_path.name
+
+                # Parse GPX with gpxpy
+                with open(gpx_path, 'r', encoding='utf-8') as f:
+                    gpx = gpxpy.parse(f)
+
+                distance_m = 0
+                elevation_gain = 0
+                for trk in gpx.tracks:
+                    for seg in trk.segments:
+                        # Distance – prefer 3-D if available
+                        distance_m += seg.length_3d() or seg.length_2d() or 0
+
+                        # Cumulative ascent
+                        pts = seg.points
+                        for i in range(1, len(pts)):
+                            if pts[i].elevation is not None and pts[i-1].elevation is not None:
+                                diff = pts[i].elevation - pts[i-1].elevation
+                                if diff > 0:
+                                    elevation_gain += diff
+
+                distance_km = round(distance_m / 1000, 2)
+                elevation_gain = round(elevation_gain)
+
+                # Prefer name from GPX metadata, then existing YAML, else filename
+                name = gpx.name or existing.get(filename, {}).get('name') or filename.replace('_', ' ').title()
+
+                track_entry = existing.get(filename, {}).copy()
+                track_entry.update({
+                    'filename': filename,
+                    'name': name,
+                    'type': track_entry.get('type', 'hiking'),
+                    'distance': f"{distance_km} km",
+                    'elevation_gain': f"{elevation_gain}m",
+                    'description': track_entry.get('description', '')
+                })
+
+                updated_tracks.append(track_entry)
+
+            # Keep deterministic order (by name)
+            updated_tracks.sort(key=lambda t: t['name'])
+
+            with open(tracks_file, 'w', encoding='utf-8') as f:
+                yaml.safe_dump({'tracks': updated_tracks}, f, sort_keys=False, allow_unicode=True)
+        except Exception as e:
+            print(f"⚠️  Could not update track metadata: {e}")
     
     def get_pages(self):
         """Get all markdown pages with their metadata"""
@@ -200,6 +264,8 @@ class WebsiteBuilder:
     def build(self):
         """Build the complete website"""
         print("Building Y Grithig website...")
+        print("0. Updating GPX track metadata...")
+        self.update_track_metadata()
         
         print("1. Cleaning build directory...")
         self.clean_build_dir()
