@@ -61,19 +61,34 @@ function initializeMap() {
 }
 
 function loadGPXTracks() {
+    console.log('Loading GPX tracks...', window.tracksData);
     const colors = ['#2c5530', '#4a7c59', '#6b8e23', '#8fbc8f', '#2e8b57'];
     let allBounds = [];
     
+    if (!window.tracksData || window.tracksData.length === 0) {
+        console.warn('No tracks data available');
+        return;
+    }
+    
     window.tracksData.forEach((track, index) => {
         const color = colors[index % colors.length];
+        console.log(`Loading GPX file: ${track.filename}`);
         
         // Load GPX file
         fetch(`gpx/${track.filename}`)
-            .then(response => response.text())
+            .then(response => {
+                console.log(`GPX file response status: ${response.status}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.text();
+            })
             .then(gpxText => {
+                console.log(`GPX text length: ${gpxText.length}`);
                 const gpxLayer = parseAndDisplayGPX(gpxText, track, color, index);
                 if (gpxLayer) {
                     gpxLayers.push(gpxLayer);
+                    console.log(`Successfully added GPX layer for ${track.name}`);
                     
                     // Collect bounds for fitting map
                     if (gpxLayer.getBounds) {
@@ -84,6 +99,8 @@ function loadGPXTracks() {
                     if (gpxLayers.length === window.tracksData.length) {
                         fitMapToAllTracks(allBounds);
                     }
+                } else {
+                    console.error(`Failed to create GPX layer for ${track.name}`);
                 }
             })
             .catch(error => {
@@ -94,12 +111,21 @@ function loadGPXTracks() {
 
 function parseAndDisplayGPX(gpxText, trackData, color, index) {
     try {
+        console.log(`Parsing GPX for ${trackData.name}...`);
         const parser = new DOMParser();
         const gpxDoc = parser.parseFromString(gpxText, 'text/xml');
+        
+        // Check for parsing errors
+        const parserError = gpxDoc.querySelector('parsererror');
+        if (parserError) {
+            console.error('XML parsing error:', parserError.textContent);
+            return null;
+        }
         
         // Extract track points
         const trackPoints = [];
         const trkpts = gpxDoc.querySelectorAll('trkpt');
+        console.log(`Found ${trkpts.length} track points in GPX file`);
         
         trkpts.forEach(trkpt => {
             const lat = parseFloat(trkpt.getAttribute('lat'));
@@ -108,6 +134,8 @@ function parseAndDisplayGPX(gpxText, trackData, color, index) {
                 trackPoints.push([lat, lon]);
             }
         });
+        
+        console.log(`Processed ${trackPoints.length} valid track points`);
         
         if (trackPoints.length === 0) {
             console.warn(`No track points found in ${trackData.filename}`);
