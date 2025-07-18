@@ -87,7 +87,8 @@ function loadGPXTracks() {
                 console.log(`GPX text length: ${gpxText.length}`);
                 const gpxLayer = parseAndDisplayGPX(gpxText, track, color, index);
                 if (gpxLayer) {
-                    gpxLayers.push(gpxLayer);
+                    // Store the layer at its original track index so focusOnTrack works reliably
+                    gpxLayers[index] = gpxLayer;
                     console.log(`Successfully added GPX layer for ${track.name}`);
                     
                     // Collect bounds for fitting map
@@ -96,7 +97,7 @@ function loadGPXTracks() {
                     }
                     
                     // After loading all tracks, fit map to show all routes
-                    if (gpxLayers.length === window.tracksData.length) {
+                    if (gpxLayers.filter(Boolean).length === window.tracksData.length) {
                         fitMapToAllTracks(allBounds);
                     }
                 } else {
