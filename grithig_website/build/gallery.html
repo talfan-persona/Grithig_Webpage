@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - Y Grithig</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    
+    
+    <link rel="stylesheet" href="static/css/lightbox.css">
+    
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="site-title">Y Grithig</h1>
+            <nav>
+                <ul class="nav-menu">
+                    
+                    <li class="nav-item">
+                        <a href="local_wildlife.html" 
+                           class="nav-link">
+                            Local Wildlife
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a href="local_sightseeing.html" 
+                           class="nav-link">
+                            Local Sightseeing
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a href="contact.html" 
+                           class="nav-link">
+                            Contact
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a href="welcome.html" 
+                           class="nav-link">
+                            Welcome
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a href="gallery.html" 
+                           class="nav-link active">
+                            Gallery
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a href="hiking_running.html" 
+                           class="nav-link">
+                            Hiking and Running
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a href="reviews.html" 
+                           class="nav-link">
+                            Reviews
+                        </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a href="house_details.html" 
+                           class="nav-link">
+                            House Details
+                        </a>
+                    </li>
+                    
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <article class="page-content">
+                <h1 class="page-title">Gallery</h1>
+                
+                
+                <!-- Special handling for gallery page -->
+                <div class="page-text">
+                    <h1>Photo Gallery</h1>
+<p>Welcome to our photo gallery showcasing the beauty of Y Grithig and the surrounding Welsh countryside. These images capture the essence of what makes our home such a special place to stay.</p>
+<h2>About Our Photos</h2>
+<p>Our gallery features photos of the house, gardens, local landscapes, and the incredible scenery that awaits just outside your door. From sunrise over the valley to the cozy interior spaces, these images will give you a taste of what to expect during your stay.</p>
+<p>Click on any photo to view it in full size and browse through the collection.</p>
+<hr />
+<h2>Image Management Instructions</h2>
+<p><strong>For parents updating this page:</strong></p>
+<p>To add or update photos in the gallery:</p>
+<ol>
+<li><strong>Add image files</strong> to the <code>images/</code> folder</li>
+<li><strong>Update the <code>images/images.yml</code> file</strong> with photo details</li>
+</ol>
+<h3>images.yml Format:</h3>
+<pre><code class="language-yaml">images:
+  - filename: &quot;your_photo.jpg&quot;
+    caption: &quot;Description of the photo&quot;
+    alt: &quot;Alternative text for accessibility&quot;
+</code></pre>
+<h3>Image Requirements:</h3>
+<ul>
+<li><strong>Supported formats</strong>: JPG, JPEG, PNG, GIF, WebP</li>
+<li><strong>Recommended size</strong>: 1200px wide maximum for web optimization</li>
+<li><strong>File naming</strong>: Use descriptive names (e.g., <code>house_exterior_sunset.jpg</code>)</li>
+</ul>
+<h3>Example Entry:</h3>
+<pre><code class="language-yaml">images:
+  - filename: &quot;house_exterior_sunset.jpg&quot;
+    caption: &quot;Y Grithig at sunset, showcasing our beautiful stone facade&quot;
+    alt: &quot;Stone cottage exterior during golden hour&quot;
+
+  - filename: &quot;living_room_fireplace.jpg&quot;
+    caption: &quot;Cozy living room with traditional Welsh stone fireplace&quot;
+    alt: &quot;Interior view of living room with stone fireplace&quot;
+
+  - filename: &quot;valley_view_morning.jpg&quot;
+    caption: &quot;Morning mist over the valley as seen from our garden&quot;
+    alt: &quot;Misty valley landscape view&quot;
+</code></pre>
+<h3>Tips for Great Gallery Photos:</h3>
+<ul>
+<li><strong>Natural lighting</strong>: Photos taken in natural light look best</li>
+<li><strong>Multiple angles</strong>: Show different perspectives of rooms and views</li>
+<li><strong>Seasonal variety</strong>: Include photos from different seasons</li>
+<li><strong>Detail shots</strong>: Close-ups of special features or amenities</li>
+<li><strong>Landscape orientation</strong>: Generally works better for web galleries </li>
+</ul>
+                </div>
+                
+                
+                <div class="gallery-grid">
+                    
+                    <div class="gallery-item">
+                        <img src="images/house_exterior_sunset.jpg" 
+                             alt="Stone cottage exterior during golden hour with rolling hills in background"
+                             class="gallery-image"
+                             data-lightbox="gallery"
+                             data-title="Y Grithig at sunset, showcasing our beautiful stone facade and countryside setting">
+                        
+                        <div class="gallery-caption">Y Grithig at sunset, showcasing our beautiful stone facade and countryside setting</div>
+                        
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <img src="images/living_room_fireplace.jpg" 
+                             alt="Interior view of living room with stone fireplace and comfortable seating"
+                             class="gallery-image"
+                             data-lightbox="gallery"
+                             data-title="Cozy living room with traditional Welsh stone fireplace - perfect for relaxing after a day of hiking">
+                        
+                        <div class="gallery-caption">Cozy living room with traditional Welsh stone fireplace - perfect for relaxing after a day of hiking</div>
+                        
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <img src="images/valley_view_morning.jpg" 
+                             alt="Misty valley landscape view from property garden at sunrise"
+                             class="gallery-image"
+                             data-lightbox="gallery"
+                             data-title="Morning mist over the valley as seen from our garden - this view greets you every morning">
+                        
+                        <div class="gallery-caption">Morning mist over the valley as seen from our garden - this view greets you every morning</div>
+                        
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <img src="images/kitchen_dining.jpg" 
+                             alt="Modern kitchen with dining table and countryside views through windows"
+                             class="gallery-image"
+                             data-lightbox="gallery"
+                             data-title="Fully equipped kitchen and dining area with space for family meals">
+                        
+                        <div class="gallery-caption">Fully equipped kitchen and dining area with space for family meals</div>
+                        
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <img src="images/master_bedroom.jpg" 
+                             alt="Double bedroom with traditional furnishings and valley views"
+                             class="gallery-image"
+                             data-lightbox="gallery"
+                             data-title="Comfortable master bedroom with countryside views">
+                        
+                        <div class="gallery-caption">Comfortable master bedroom with countryside views</div>
+                        
+                    </div>
+                    
+                    <div class="gallery-item">
+                        <img src="images/garden_seating.jpg" 
+                             alt="Garden patio area with outdoor furniture overlooking countryside"
+                             class="gallery-image"
+                             data-lightbox="gallery"
+                             data-title="Private garden with outdoor seating area - perfect for morning coffee or evening relaxation">
+                        
+                        <div class="gallery-caption">Private garden with outdoor seating area - perfect for morning coffee or evening relaxation</div>
+                        
+                    </div>
+                    
+                </div>
+                
+                
+                
+            </article>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Y Grithig. Built with love for our guests.</p>
+            <p class="build-info">Last updated: 2025-07-18 16:12</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="static/js/main.js"></script>
+    
+    
+    
+    
+    <script src="static/js/lightbox.js"></script>
+    
+</body>
+</html> 

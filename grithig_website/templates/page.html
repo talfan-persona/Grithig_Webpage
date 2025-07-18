@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }} - {{ site_title }}</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    {% if page.filename == 'hiking_running' %}
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" 
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    {% endif %}
+    {% if page.filename == 'gallery' %}
+    <link rel="stylesheet" href="static/css/lightbox.css">
+    {% endif %}
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="site-title">{{ site_title }}</h1>
+            <nav>
+                <ul class="nav-menu">
+                    {% for nav_page in pages %}
+                    <li class="nav-item">
+                        <a href="{{ nav_page.filename }}.html" 
+                           class="nav-link{% if nav_page.filename == page.filename %} active{% endif %}">
+                            {{ nav_page.title }}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <article class="page-content">
+                <h1 class="page-title">{{ page.title }}</h1>
+                
+                {% if page.filename == 'hiking_running' %}
+                <!-- Special handling for hiking/running page -->
+                <div class="page-text">
+                    {{ page.content|safe }}
+                </div>
+                
+                {% if tracks %}
+                <div class="tracks-section">
+                    <h2>Trail Routes</h2>
+                    <div id="map" class="trail-map"></div>
+                    
+                    <div class="tracks-list">
+                        {% for track in tracks %}
+                        <div class="track-card" data-track="{{ loop.index0 }}">
+                            <h3>{{ track.name }}</h3>
+                            <div class="track-details">
+                                <span class="track-type">{{ track.type|title }}</span>
+                                {% if track.distance %}
+                                <span class="track-distance">{{ track.distance }}</span>
+                                {% endif %}
+                                {% if track.elevation_gain %}
+                                <span class="track-elevation">⬆ {{ track.elevation_gain }}</span>
+                                {% endif %}
+                            </div>
+                            {% if track.description %}
+                            <p class="track-description">{{ track.description }}</p>
+                            {% endif %}
+                            <a href="gpx/{{ track.filename }}" download class="download-btn">Download GPX</a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+                
+                {% elif page.filename == 'gallery' %}
+                <!-- Special handling for gallery page -->
+                <div class="page-text">
+                    {{ page.content|safe }}
+                </div>
+                
+                {% if images %}
+                <div class="gallery-grid">
+                    {% for image in images %}
+                    <div class="gallery-item">
+                        <img src="images/{{ image.filename }}" 
+                             alt="{{ image.alt or image.caption or 'Gallery image' }}"
+                             class="gallery-image"
+                             data-lightbox="gallery"
+                             data-title="{{ image.caption or '' }}">
+                        {% if image.caption %}
+                        <div class="gallery-caption">{{ image.caption }}</div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                
+                {% else %}
+                <!-- Standard page content -->
+                <div class="page-text">
+                    {{ page.content|safe }}
+                </div>
+                {% endif %}
+            </article>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 {{ site_title }}. Built with love for our guests.</p>
+            <p class="build-info">Last updated: {{ build_date }}</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="static/js/main.js"></script>
+    
+    {% if page.filename == 'hiking_running' %}
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" 
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="static/js/hiking.js"></script>
+    <script>
+        // Initialize map with tracks data
+        window.tracksData = {{ tracks|tojson|safe }};
+    </script>
+    {% endif %}
+    
+    {% if page.filename == 'gallery' %}
+    <script src="static/js/lightbox.js"></script>
+    {% endif %}
+</body>
+</html> 

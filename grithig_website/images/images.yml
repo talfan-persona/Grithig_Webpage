@@ -1,0 +1,24 @@
+images:
+  - filename: "house_exterior_sunset.jpg"
+    caption: "Y Grithig at sunset, showcasing our beautiful stone facade and countryside setting"
+    alt: "Stone cottage exterior during golden hour with rolling hills in background"
+  
+  - filename: "living_room_fireplace.jpg"
+    caption: "Cozy living room with traditional Welsh stone fireplace - perfect for relaxing after a day of hiking"
+    alt: "Interior view of living room with stone fireplace and comfortable seating"
+  
+  - filename: "valley_view_morning.jpg"
+    caption: "Morning mist over the valley as seen from our garden - this view greets you every morning"
+    alt: "Misty valley landscape view from property garden at sunrise"
+  
+  - filename: "kitchen_dining.jpg"
+    caption: "Fully equipped kitchen and dining area with space for family meals"
+    alt: "Modern kitchen with dining table and countryside views through windows"
+  
+  - filename: "master_bedroom.jpg"
+    caption: "Comfortable master bedroom with countryside views"
+    alt: "Double bedroom with traditional furnishings and valley views"
+  
+  - filename: "garden_seating.jpg"
+    caption: "Private garden with outdoor seating area - perfect for morning coffee or evening relaxation"
+    alt: "Garden patio area with outdoor furniture overlooking countryside" 
