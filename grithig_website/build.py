@@ -20,7 +20,8 @@ class WebsiteBuilder:
         self.pages_dir = self.base_dir / 'pages'
         self.templates_dir = self.base_dir / 'templates'
         self.static_dir = self.base_dir / 'static'
-        self.build_dir = self.base_dir / 'build'
+        # Output goes directly to the repository-root "docs" folder so GitHub Pages can serve it.
+        self.build_dir = self.base_dir.parent / 'docs'
         self.gpx_dir = self.base_dir / 'gpx'
         self.images_dir = self.base_dir / 'images'
         
@@ -31,10 +32,16 @@ class WebsiteBuilder:
         self.md = markdown.Markdown(extensions=['meta', 'tables', 'fenced_code'])
     
     def clean_build_dir(self):
-        """Clean and recreate the build directory"""
+        """Clean and recreate the build (docs) directory; remove legacy grithig_website/build if present."""
+        # Remove old build directory inside the package, if it exists
+        legacy_build = self.base_dir / 'build'
+        if legacy_build.exists():
+            shutil.rmtree(legacy_build)
+
+        # Remove and recreate the docs directory (self.build_dir)
         if self.build_dir.exists():
             shutil.rmtree(self.build_dir)
-        self.build_dir.mkdir(exist_ok=True)
+        self.build_dir.mkdir(parents=True, exist_ok=True)
     
     def copy_static_files(self):
         """Copy static files (CSS, JS, images) to build directory"""
